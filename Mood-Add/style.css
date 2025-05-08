@@ -1,45 +1,35 @@
-/* --- CSS Variables for Clarity and Consistency --- */
 :root {
     --prime-blue: #00A8E1;
     --prime-blue-light: #4FC3F7;
     --prime-button-blue: #0F52BA;
-    --prime-button-blue-hover: #00418C; /* Darker for clear hover */
+    --prime-button-blue-hover: #00418C;
     --prime-button-blue-active: #00336B;
-
-    --text-light: #FFFFFF; /* Pure white for max contrast on dark */
-    --text-medium: #B0BEC5; /* Lighter, clearer medium grey */
+    --text-light: #FFFFFF;
+    --text-medium: #B0BEC5;
     --text-dark: #212121;
-
-    --bg-dark: #101010; /* Very dark, almost black */
-    --bg-element-dark: #1E1E1E; /* For buttons, inputs */
+    --bg-dark: #101010;
+    --bg-element-dark: #1E1E1E;
     --bg-element-hover: #2A2A2A;
-
     --border-color-subtle: rgba(255, 255, 255, 0.1);
     --border-color-interactive: var(--prime-blue);
-
     --disabled-bg: #333333;
     --disabled-text: #757575;
     --disabled-border: #444444;
-
-    --font-primary: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; /* Clean, widely available */
+    --font-primary: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
     --font-logo: 'Amazon Ember', Arial, sans-serif;
-
     --radius-small: 4px;
     --radius-medium: 8px;
-
     --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.3);
     --shadow-interactive: 0 2px 6px rgba(0, 0, 0, 0.2);
-
     --transition-default: 0.2s ease-out;
 }
 
-/* --- Base & Layout --- */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #263238; /* Darker page background */
+    background-color: #263238;
     margin: 0;
     font-family: var(--font-primary);
     color: var(--text-light);
@@ -51,27 +41,27 @@ body {
     width: 300px;
     height: 600px;
     background-color: var(--bg-dark);
-    border-radius: var(--radius-medium); /* Softer radius */
+    border-radius: var(--radius-medium);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
-    display: flex; /* Used to manage screen transitions */
-    flex-direction: column; /* Although screens will be absolute */
+    display: flex;
+    flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
 }
 
 .screen {
-    position: absolute; /* Position screens on top of each other */
+    position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    padding: 20px; /* Consistent padding within screen content area */
+    padding: 20px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center content horizontally by default */
-    justify-content: space-between; /* Distribute content vertically */
+    align-items: center;
+    justify-content: space-between;
     opacity: 0;
-    visibility: hidden; /* Use visibility for better performance than display:none with transitions */
+    visibility: hidden;
     transform: translateY(15px);
     transition: opacity var(--transition-default), transform var(--transition-default), visibility var(--transition-default);
 }
@@ -82,22 +72,20 @@ body {
     transform: translateY(0);
 }
 
-/* Specific screen content alignment if needed */
-#screen-scanning .content-wrapper, /* Add wrapper if needed for scanning */
+#screen-scanning .content-wrapper,
 #screen-manual-mood .mood-options {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center vertically */
+    justify-content: center;
     width: 100%;
 }
 
-/* --- Typography & Common Elements --- */
 .ad-header {
     width: 100%;
     text-align: center;
-    margin-bottom: 20px; /* Consistent spacing */
-    flex-shrink: 0; /* Prevent shrinking */
+    margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
 .prime-logo-text {
@@ -123,18 +111,16 @@ h2 {
 p {
     font-size: 0.9em;
     color: var(--text-medium);
-    line-height: 1.6; /* Improved readability */
+    line-height: 1.6;
     text-align: center;
     margin-bottom: 15px;
-    max-width: 90%; /* Prevent overly wide paragraphs */
+    max-width: 90%;
 }
-.tagline { /* For "Smile, frown..." */
+.tagline {
     font-size: 1em;
     margin-bottom: 20px;
 }
 
-
-/* --- Buttons --- */
 button, .button {
     background-color: var(--prime-button-blue);
     color: var(--text-light);
@@ -143,16 +129,16 @@ button, .button {
     text-align: center;
     text-decoration: none;
     font-size: 0.95em;
-    font-weight: 500; /* Medium weight for clarity */
+    font-weight: 500;
     border-radius: var(--radius-small);
     cursor: pointer;
-    width: 100%; /* Make buttons full width by default for this layout */
-    max-width: 240px; /* Max width for buttons */
+    width: 100%;
+    max-width: 240px;
     box-sizing: border-box;
     box-shadow: var(--shadow-interactive);
     transition: background-color var(--transition-default), transform var(--transition-default), box-shadow var(--transition-default);
-    margin-top: 10px; /* Space above button if multiple stacked */
-    display: block; /* Ensures width takes effect and centers with margin auto if parent is flex */
+    margin-top: 10px;
+    display: block;
     margin-left: auto;
     margin-right: auto;
 }
@@ -185,8 +171,8 @@ button:disabled {
 .manual-mood-link-container {
     width: 100%;
     text-align: center;
-    margin-top: 20px; /* Consistent spacing */
-    padding-bottom: 5px; /* Space at the very bottom */
+    margin-top: 20px;
+    padding-bottom: 5px;
     flex-shrink: 0;
 }
 
@@ -207,20 +193,19 @@ button:disabled {
     outline: none;
 }
 
-/* --- Screen 2: Camera & Screen 3: Scanning --- */
-.video-capture-area { /* This div wraps the video container and brackets */
+.video-capture-area {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
-    flex-grow: 1; /* Allows this section to take up available vertical space */
+    flex-grow: 1;
     width: 100%;
 }
 
-.video-container { /* The black square with brackets */
+.video-container {
     width: 220px;
-    height: 280px; /* Adjusted for better proportion */
-    position: relative; /* For bracket positioning */
+    height: 280px;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -239,17 +224,16 @@ button:disabled {
 .bracket.bottom-left { bottom: 0; left: 0; border-width: 0 0 3px 3px; }
 .bracket.bottom-right { bottom: 0; right: 0; border-width: 0 3px 3px 0; }
 
-/* The actual video/image display area inside brackets */
 #user-video, #scan-preview-img, .video-placeholder {
-    width: calc(100% - 40px); /* Space inside brackets */
+    width: calc(100% - 40px);
     height: calc(100% - 40px);
     object-fit: cover;
     display: block;
     border-radius: var(--radius-small);
-    background-color: #000; /* Black background for video element */
+    background-color: #000;
 }
 .video-placeholder {
-    position: absolute; /* Overlay on video element */
+    position: absolute;
     z-index: 5;
     transition: opacity var(--transition-default);
 }
@@ -259,58 +243,44 @@ button:disabled {
 }
 
 #check-mood-btn {
-    max-width: 220px; /* Match video area for visual consistency */
+    max-width: 220px;
     text-transform: uppercase;
 }
 
-/* Scanning Animation */
 .scan-bar {
     position: absolute;
-    /* Position relative to #scan-preview-img */
     bottom: 0;
-    left: 0; /* Will be inside #scan-preview-img's container if #scan-preview-img is relative */
-    width: 100%; /* Relative to parent */
+    left: 0;
+    width: 100%;
     height: 4px;
     background: var(--prime-blue);
     box-shadow: 0 0 10px var(--prime-blue), 0 0 15px var(--prime-blue);
     animation: scanAnimationUpDown 2.5s infinite linear;
-    z-index: 10; /* On top of the image being scanned */
+    z-index: 10;
     border-radius: 2px;
 }
-/* Ensure #scan-preview-img's parent (or #scan-preview-img itself if it's a container) is position:relative */
-#screen-scanning .video-container.with-brackets { /* This will contain the scan-preview-img and scan-bar */
-    /* The video-container itself does not need to be position: relative if #scan-preview-img handles it,
-       but it's safer if the video-container is the positioning context for the bar.
-       The #scan-preview-img is already absolute positioned within this.
-       So the scan-bar needs to be absolute to the same context or to scan-preview-img if it were relative.
-       Let's make scan-bar relative to the video-container's inner dimensions.
-    */
-    /* No changes here, the bar is within the #scan-preview-img container if that is made relative */
-}
-#scan-preview-img { /* Make the image itself the relative container for the scan bar */
-    position: relative; /* So scan bar can be absolute to it */
-    overflow: hidden; /* Keep scan bar inside */
+
+#scan-preview-img {
+    position: relative;
+    overflow: hidden;
 }
 
-
-@keyframes scanAnimationUpDown { /* Scan bar moves within its parent */
+@keyframes scanAnimationUpDown {
     0%   { transform: translateY(0); }
-    50%  { transform: translateY(calc(-100% + 4px)); } /* Move up full height of parent */
+    50%  { transform: translateY(calc(-100% + 4px)); }
     100% { transform: translateY(0); }
 }
 
 .scanning-text {
     font-size: 1em;
     color: var(--text-medium);
-    margin-top: 15px; /* Space below scanning area */
+    margin-top: 15px;
     font-weight: 400;
 }
 
-
-/* --- Screen 4: Movie Recommendation --- */
 #screen-recommendation {
-    justify-content: flex-start; /* Align content to top */
-    padding-top: 10px; /* ad-header will push this down */
+    justify-content: flex-start;
+    padding-top: 10px;
 }
 #screen-recommendation .ad-header { margin-bottom: 15px; }
 
@@ -338,29 +308,29 @@ button:disabled {
 }
 
 .movie-poster-container {
-    width: 180px; /* Slightly smaller poster for better balance */
+    width: 180px;
     padding: 5px;
     background-color: var(--text-light);
     border-radius: var(--radius-medium);
-    margin: 0 auto 20px auto; /* Center poster and add bottom margin */
+    margin: 0 auto 20px auto;
     box-shadow: var(--shadow-soft);
 }
 #movie-poster {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: var(--radius-small); /* Match inner rounding */
-    min-height: 180px; /* Placeholder aspect */
+    border-radius: var(--radius-small);
+    min-height: 180px;
     background-color: var(--bg-element-dark);
 }
 
 #watch-now-btn.watch-now-styled {
     background-color: var(--text-light);
-    color: var(--prime-button-blue); /* Use button blue for text */
+    color: var(--prime-button-blue);
     font-weight: 600;
     padding: 10px 25px;
     font-size: 0.9em;
-    border-radius: 20px; /* Pill shape */
+    border-radius: 20px;
     border: 1px solid rgba(0,0,0,0.05);
     margin-bottom: 10px;
     max-width: 180px;
@@ -375,13 +345,12 @@ button:disabled {
     text-transform: uppercase;
 }
 
-/* --- Screen 5: Manual Mood Selection --- */
 #screen-manual-mood h2 { margin-bottom: 20px; }
 
 .mood-options {
-    gap: 10px; /* Space between mood buttons */
+    gap: 10px;
     margin-bottom: 20px;
-    align-items: center; /* Ensure buttons are centered if not full width */
+    align-items: center;
 }
 
 .mood-options .mood-btn {
@@ -390,9 +359,9 @@ button:disabled {
     border: 1px solid var(--border-color-subtle);
     padding: 12px 15px;
     font-size: 1em;
-    border-radius: var(--radius-medium); /* Consistent rounding */
-    width: 100%; /* Full width within its container */
-    max-width: 230px; /* Max width for these buttons */
+    border-radius: var(--radius-medium);
+    width: 100%;
+    max-width: 230px;
     box-shadow: var(--shadow-interactive);
     transition: background-color var(--transition-default), color var(--transition-default), border-color var(--transition-default), transform var(--transition-default);
 }
@@ -409,10 +378,10 @@ button:disabled {
     color: var(--text-light);
     border: 1px solid var(--prime-blue-light);
     font-weight: 500;
-    transform: scale(1.02); /* Slight pop for selected */
+    transform: scale(1.02);
 }
 .mood-options .mood-btn.selected:hover {
-    background-color: var(--prime-blue-light); /* Brighter hover for selected */
+    background-color: var(--prime-blue-light);
 }
 
 .mood-options .mood-btn:focus-visible {
@@ -422,26 +391,24 @@ button:disabled {
 
 #this-is-my-mood-btn.confirm-mood-button {
     text-transform: uppercase;
-    margin-top: auto; /* Push to bottom if .mood-options doesn't fill flex-grow space */
+    margin-top: auto;
     max-width: 230px;
 }
 
-
-/* --- Message Area --- */
 #message-area {
     position: absolute;
     bottom: 15px;
     left: 50%;
-    width: calc(100% - 30px); /* Wider message area */
-    background-color: rgba(255, 82, 82, 0.15); /* Red-ish error default */
+    width: calc(100% - 30px);
+    background-color: rgba(255, 82, 82, 0.15);
     border: 1px solid rgba(255, 82, 82, 0.5);
     padding: 10px;
     border-radius: var(--radius-small);
     font-size: 0.85em;
     font-weight: 500;
-    color: #ff5252; /* Brighter red text */
+    color: #ff5252;
     text-align: center;
-    z-index: 200; /* High z-index */
+    z-index: 200;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     opacity: 0;
@@ -449,14 +416,14 @@ button:disabled {
     transform: translateY(10px) translateX(-50%);
     transition: opacity var(--transition-default), transform var(--transition-default), visibility var(--transition-default);
 }
-#message-area[style*="display: block"], /* Old JS method */
-#message-area.visible /* New JS method if you add a class */
+#message-area[style*="display: block"],
+#message-area.visible
 {
     opacity: 1;
     visibility: visible;
     transform: translateY(0px) translateX(-50%);
 }
-#message-area.success-message { /* Style for success messages */
+#message-area.success-message {
     background-color: rgba(0, 168, 225, 0.1);
     border-color: var(--prime-blue);
     color: var(--prime-blue-light);
