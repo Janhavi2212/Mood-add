@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Movie Ad</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="ad-container">
+        <div id="screen-initial" class="screen active">
+            <div class="ad-header">
+                 <div class="prime-logo-text">prime<span>video</span></div>
+            </div>
+            <h2>Discover Your Next Movie!</h2>
+            <p>Let us scan your face to find a movie based on your mood.</p>
+            <button id="allow-camera-btn">Allow Camera Access</button>
+            <p class="manual-mood-link-container">
+                <a href="#" id="no-pic-initial-link">No Pic? no problem! choose your mood</a>
+            </p>
+        </div>
+
+        <div id="screen-camera" class="screen">
+            <div class="ad-header">
+                <div class="prime-logo-text">prime<span>video</span></div>
+            </div>
+            <p class="tagline">Smile, frown, or just stare,<br>We will read your face!</p>
+            <div class="video-capture-area">
+                <div class="video-container with-brackets">
+                    <span class="bracket top-left"></span>
+                    <span class="bracket top-right"></span>
+                    <span class="bracket bottom-left"></span>
+                    <span class="bracket bottom-right"></span>
+                    <video id="user-video" autoplay playsinline muted></video>
+                    <canvas id="photo-canvas" style="display: none;"></canvas>
+                    <img src="https://i.imgur.com/w28X7S4.png" alt="Face placeholder" id="video-placeholder-img" class="video-placeholder">
+                </div>
+            </div>
+            <button id="check-mood-btn">CHECK MY MOOD</button>
+            <p class="manual-mood-link-container">
+                <a href="#" id="no-pic-camera-link">No Pic? no problem! choose your mood</a>
+            </p>
+        </div>
+
+        <div id="screen-scanning" class="screen">
+            <div class="ad-header">
+                 <div class="prime-logo-text">prime<span>video</span></div>
+            </div>
+            <div class="video-capture-area">
+                <div class="video-container with-brackets"> 
+                    <span class="bracket top-left"></span>
+                    <span class="bracket top-right"></span>
+                    <span class="bracket bottom-left"></span>
+                    <span class="bracket bottom-right"></span>
+                    <img id="scan-preview-img" src="#" alt="Scanning face">
+                    <div class="scan-bar"></div>
+                </div>
+            </div>
+            <p class="scanning-text">Scanning your mood...</p>
+        </div>
+
+        <div id="screen-recommendation" class="screen">
+            <div class="ad-header">
+                 <div class="prime-logo-text">prime<span>video</span></div>
+            </div>
+            <p id="recommendation-intro" class="recommendation-intro-text"></p>
+            
+            <h3 id="movie-title-recommendation">Movie Title Here</h3>
+            
+            <div class="movie-poster-container">
+                <img id="movie-poster" src="https://via.placeholder.com/200x300/333333/FFFFFF?Text=Movie+Poster" alt="Movie Poster">
+            </div>
+            
+            <a id="watch-now-btn" href="#" target="_blank" class="button watch-now-styled">Watch Now</a>
+            <button id="scan-again-btn" class="scan-again-styled">SCAN AGAIN</button>
+        </div>
+
+        <div id="screen-manual-mood" class="screen">
+            <div class="ad-header">
+                 <div class="prime-logo-text">prime<span>video</span></div>
+            </div>
+            <h2>How would you describe your mood?</h2>
+            <div class="mood-options">
+                <button class="mood-btn" data-mood="Happy">Happy</button>
+                <button class="mood-btn" data-mood="Excited">Excited</button>
+                <button class="mood-btn" data-mood="Neutral">Neutral</button>
+                <button class="mood-btn" data-mood="Angry">Angry</button>
+                <button class="mood-btn" data-mood="Sad">Sad</button>
+            </div>
+            <button id="this-is-my-mood-btn" class="confirm-mood-button" disabled>THIS IS MY MOOD</button>
+        </div>
+
+        <div id="message-area" style="display: none;"></div>
+    </div>
+
+    <script src="script1.js"></script>
+</body>
+</html>

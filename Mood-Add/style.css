@@ -1,0 +1,463 @@
+/* --- CSS Variables for Clarity and Consistency --- */
+:root {
+    --prime-blue: #00A8E1;
+    --prime-blue-light: #4FC3F7;
+    --prime-button-blue: #0F52BA;
+    --prime-button-blue-hover: #00418C; /* Darker for clear hover */
+    --prime-button-blue-active: #00336B;
+
+    --text-light: #FFFFFF; /* Pure white for max contrast on dark */
+    --text-medium: #B0BEC5; /* Lighter, clearer medium grey */
+    --text-dark: #212121;
+
+    --bg-dark: #101010; /* Very dark, almost black */
+    --bg-element-dark: #1E1E1E; /* For buttons, inputs */
+    --bg-element-hover: #2A2A2A;
+
+    --border-color-subtle: rgba(255, 255, 255, 0.1);
+    --border-color-interactive: var(--prime-blue);
+
+    --disabled-bg: #333333;
+    --disabled-text: #757575;
+    --disabled-border: #444444;
+
+    --font-primary: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; /* Clean, widely available */
+    --font-logo: 'Amazon Ember', Arial, sans-serif;
+
+    --radius-small: 4px;
+    --radius-medium: 8px;
+
+    --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-interactive: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+    --transition-default: 0.2s ease-out;
+}
+
+/* --- Base & Layout --- */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #263238; /* Darker page background */
+    margin: 0;
+    font-family: var(--font-primary);
+    color: var(--text-light);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+#ad-container {
+    width: 300px;
+    height: 600px;
+    background-color: var(--bg-dark);
+    border-radius: var(--radius-medium); /* Softer radius */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    display: flex; /* Used to manage screen transitions */
+    flex-direction: column; /* Although screens will be absolute */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.screen {
+    position: absolute; /* Position screens on top of each other */
+    top: 0; left: 0; right: 0; bottom: 0;
+    padding: 20px; /* Consistent padding within screen content area */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally by default */
+    justify-content: space-between; /* Distribute content vertically */
+    opacity: 0;
+    visibility: hidden; /* Use visibility for better performance than display:none with transitions */
+    transform: translateY(15px);
+    transition: opacity var(--transition-default), transform var(--transition-default), visibility var(--transition-default);
+}
+
+.screen.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Specific screen content alignment if needed */
+#screen-scanning .content-wrapper, /* Add wrapper if needed for scanning */
+#screen-manual-mood .mood-options {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    width: 100%;
+}
+
+/* --- Typography & Common Elements --- */
+.ad-header {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px; /* Consistent spacing */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.prime-logo-text {
+    font-family: var(--font-logo);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--prime-blue);
+    letter-spacing: -0.5px;
+}
+.prime-logo-text span {
+    font-weight: 400;
+}
+
+h2 {
+    font-size: 1.25em;
+    margin-bottom: 10px;
+    color: var(--text-light);
+    font-weight: 500;
+    line-height: 1.3;
+    text-align: center;
+}
+
+p {
+    font-size: 0.9em;
+    color: var(--text-medium);
+    line-height: 1.6; /* Improved readability */
+    text-align: center;
+    margin-bottom: 15px;
+    max-width: 90%; /* Prevent overly wide paragraphs */
+}
+.tagline { /* For "Smile, frown..." */
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+
+/* --- Buttons --- */
+button, .button {
+    background-color: var(--prime-button-blue);
+    color: var(--text-light);
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: 500; /* Medium weight for clarity */
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    width: 100%; /* Make buttons full width by default for this layout */
+    max-width: 240px; /* Max width for buttons */
+    box-sizing: border-box;
+    box-shadow: var(--shadow-interactive);
+    transition: background-color var(--transition-default), transform var(--transition-default), box-shadow var(--transition-default);
+    margin-top: 10px; /* Space above button if multiple stacked */
+    display: block; /* Ensures width takes effect and centers with margin auto if parent is flex */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button:hover:not(:disabled), .button:hover:not(:disabled) {
+    background-color: var(--prime-button-blue-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+button:active:not(:disabled), .button:active:not(:disabled) {
+    background-color: var(--prime-button-blue-active);
+    transform: translateY(0px);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+button:focus-visible, .button:focus-visible {
+    outline: 2px solid var(--prime-blue-light);
+    outline-offset: 2px;
+}
+
+button:disabled {
+    background-color: var(--disabled-bg);
+    color: var(--disabled-text);
+    cursor: not-allowed;
+    border: 1px solid var(--disabled-border);
+    box-shadow: none;
+}
+
+.manual-mood-link-container {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px; /* Consistent spacing */
+    padding-bottom: 5px; /* Space at the very bottom */
+    flex-shrink: 0;
+}
+
+.manual-mood-link-container a {
+    font-size: 0.85em;
+    color: var(--prime-blue-light);
+    text-decoration: none;
+    padding: 5px;
+    border-radius: var(--radius-small);
+    transition: color var(--transition-default), background-color var(--transition-default);
+}
+
+.manual-mood-link-container a:hover,
+.manual-mood-link-container a:focus-visible {
+    color: var(--prime-blue);
+    background-color: rgba(0, 168, 225, 0.1);
+    text-decoration: underline;
+    outline: none;
+}
+
+/* --- Screen 2: Camera & Screen 3: Scanning --- */
+.video-capture-area { /* This div wraps the video container and brackets */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Allows this section to take up available vertical space */
+    width: 100%;
+}
+
+.video-container { /* The black square with brackets */
+    width: 220px;
+    height: 280px; /* Adjusted for better proportion */
+    position: relative; /* For bracket positioning */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-container.with-brackets .bracket {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--text-light);
+    border-style: solid;
+    opacity: 0.7;
+}
+.bracket.top-left { top: 0; left: 0; border-width: 3px 0 0 3px; }
+.bracket.top-right { top: 0; right: 0; border-width: 3px 3px 0 0; }
+.bracket.bottom-left { bottom: 0; left: 0; border-width: 0 0 3px 3px; }
+.bracket.bottom-right { bottom: 0; right: 0; border-width: 0 3px 3px 0; }
+
+/* The actual video/image display area inside brackets */
+#user-video, #scan-preview-img, .video-placeholder {
+    width: calc(100% - 40px); /* Space inside brackets */
+    height: calc(100% - 40px);
+    object-fit: cover;
+    display: block;
+    border-radius: var(--radius-small);
+    background-color: #000; /* Black background for video element */
+}
+.video-placeholder {
+    position: absolute; /* Overlay on video element */
+    z-index: 5;
+    transition: opacity var(--transition-default);
+}
+#user-video.active + .video-placeholder {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#check-mood-btn {
+    max-width: 220px; /* Match video area for visual consistency */
+    text-transform: uppercase;
+}
+
+/* Scanning Animation */
+.scan-bar {
+    position: absolute;
+    /* Position relative to #scan-preview-img */
+    bottom: 0;
+    left: 0; /* Will be inside #scan-preview-img's container if #scan-preview-img is relative */
+    width: 100%; /* Relative to parent */
+    height: 4px;
+    background: var(--prime-blue);
+    box-shadow: 0 0 10px var(--prime-blue), 0 0 15px var(--prime-blue);
+    animation: scanAnimationUpDown 2.5s infinite linear;
+    z-index: 10; /* On top of the image being scanned */
+    border-radius: 2px;
+}
+/* Ensure #scan-preview-img's parent (or #scan-preview-img itself if it's a container) is position:relative */
+#screen-scanning .video-container.with-brackets { /* This will contain the scan-preview-img and scan-bar */
+    /* The video-container itself does not need to be position: relative if #scan-preview-img handles it,
+       but it's safer if the video-container is the positioning context for the bar.
+       The #scan-preview-img is already absolute positioned within this.
+       So the scan-bar needs to be absolute to the same context or to scan-preview-img if it were relative.
+       Let's make scan-bar relative to the video-container's inner dimensions.
+    */
+    /* No changes here, the bar is within the #scan-preview-img container if that is made relative */
+}
+#scan-preview-img { /* Make the image itself the relative container for the scan bar */
+    position: relative; /* So scan bar can be absolute to it */
+    overflow: hidden; /* Keep scan bar inside */
+}
+
+
+@keyframes scanAnimationUpDown { /* Scan bar moves within its parent */
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(calc(-100% + 4px)); } /* Move up full height of parent */
+    100% { transform: translateY(0); }
+}
+
+.scanning-text {
+    font-size: 1em;
+    color: var(--text-medium);
+    margin-top: 15px; /* Space below scanning area */
+    font-weight: 400;
+}
+
+
+/* --- Screen 4: Movie Recommendation --- */
+#screen-recommendation {
+    justify-content: flex-start; /* Align content to top */
+    padding-top: 10px; /* ad-header will push this down */
+}
+#screen-recommendation .ad-header { margin-bottom: 15px; }
+
+.recommendation-intro-text {
+    font-size: 1.1em;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+.detected-mood-highlight {
+    background-color: var(--prime-button-blue);
+    color: var(--text-light);
+    padding: 3px 8px;
+    border-radius: var(--radius-small);
+    font-weight: 500;
+}
+
+#movie-title-recommendation {
+    font-size: 1.4em;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.movie-poster-container {
+    width: 180px; /* Slightly smaller poster for better balance */
+    padding: 5px;
+    background-color: var(--text-light);
+    border-radius: var(--radius-medium);
+    margin: 0 auto 20px auto; /* Center poster and add bottom margin */
+    box-shadow: var(--shadow-soft);
+}
+#movie-poster {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-small); /* Match inner rounding */
+    min-height: 180px; /* Placeholder aspect */
+    background-color: var(--bg-element-dark);
+}
+
+#watch-now-btn.watch-now-styled {
+    background-color: var(--text-light);
+    color: var(--prime-button-blue); /* Use button blue for text */
+    font-weight: 600;
+    padding: 10px 25px;
+    font-size: 0.9em;
+    border-radius: 20px; /* Pill shape */
+    border: 1px solid rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+    max-width: 180px;
+}
+#watch-now-btn.watch-now-styled:hover {
+    background-color: #f0f0f0;
+    color: var(--prime-button-blue-hover);
+}
+
+#scan-again-btn.scan-again-styled {
+    max-width: 180px;
+    text-transform: uppercase;
+}
+
+/* --- Screen 5: Manual Mood Selection --- */
+#screen-manual-mood h2 { margin-bottom: 20px; }
+
+.mood-options {
+    gap: 10px; /* Space between mood buttons */
+    margin-bottom: 20px;
+    align-items: center; /* Ensure buttons are centered if not full width */
+}
+
+.mood-options .mood-btn {
+    background-color: var(--bg-element-dark);
+    color: var(--text-medium);
+    border: 1px solid var(--border-color-subtle);
+    padding: 12px 15px;
+    font-size: 1em;
+    border-radius: var(--radius-medium); /* Consistent rounding */
+    width: 100%; /* Full width within its container */
+    max-width: 230px; /* Max width for these buttons */
+    box-shadow: var(--shadow-interactive);
+    transition: background-color var(--transition-default), color var(--transition-default), border-color var(--transition-default), transform var(--transition-default);
+}
+
+.mood-options .mood-btn:hover:not(.selected) {
+    background-color: var(--bg-element-hover);
+    border-color: rgba(255,255,255,0.2);
+    color: var(--text-light);
+    transform: translateY(-1px);
+}
+
+.mood-options .mood-btn.selected {
+    background-color: var(--prime-blue);
+    color: var(--text-light);
+    border: 1px solid var(--prime-blue-light);
+    font-weight: 500;
+    transform: scale(1.02); /* Slight pop for selected */
+}
+.mood-options .mood-btn.selected:hover {
+    background-color: var(--prime-blue-light); /* Brighter hover for selected */
+}
+
+.mood-options .mood-btn:focus-visible {
+    outline: 2px solid var(--prime-blue-light);
+    outline-offset: 1px;
+}
+
+#this-is-my-mood-btn.confirm-mood-button {
+    text-transform: uppercase;
+    margin-top: auto; /* Push to bottom if .mood-options doesn't fill flex-grow space */
+    max-width: 230px;
+}
+
+
+/* --- Message Area --- */
+#message-area {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    width: calc(100% - 30px); /* Wider message area */
+    background-color: rgba(255, 82, 82, 0.15); /* Red-ish error default */
+    border: 1px solid rgba(255, 82, 82, 0.5);
+    padding: 10px;
+    border-radius: var(--radius-small);
+    font-size: 0.85em;
+    font-weight: 500;
+    color: #ff5252; /* Brighter red text */
+    text-align: center;
+    z-index: 200; /* High z-index */
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) translateX(-50%);
+    transition: opacity var(--transition-default), transform var(--transition-default), visibility var(--transition-default);
+}
+#message-area[style*="display: block"], /* Old JS method */
+#message-area.visible /* New JS method if you add a class */
+{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px) translateX(-50%);
+}
+#message-area.success-message { /* Style for success messages */
+    background-color: rgba(0, 168, 225, 0.1);
+    border-color: var(--prime-blue);
+    color: var(--prime-blue-light);
+}

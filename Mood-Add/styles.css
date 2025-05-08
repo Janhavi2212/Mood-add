@@ -1,0 +1,449 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #e0e0e0;
+    margin: 0;
+    font-family: 'Amazon Ember', Arial, Helvetica, sans-serif; /* Fallback fonts */
+}
+
+#ad-container {
+    width: 300px;
+    height: 600px;
+    background-color: #000000;
+    border: 1px solid #111;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    color: #ffffff;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.screen.active {
+    display: flex;
+}
+
+#screen-initial,
+#screen-camera,
+#screen-recommendation,
+#screen-manual-mood {
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#screen-scanning { 
+    justify-content: center;
+}
+
+
+/* Header and Logo */
+.ad-header {
+    width: 100%;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.prime-logo-text {
+    font-size: 26px;
+    font-weight: 700;
+    color: #00A8E1;
+    font-family: 'Amazon Ember', Arial, sans-serif;
+    letter-spacing: -0.5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.prime-logo-text span {
+    font-weight: 400;
+}
+
+h2 { /* General h2, for initial screen title and manual mood title */
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+p {
+    font-size: 0.95em;
+    margin-bottom: 15px;
+    color: #e0e0e0;
+    line-height: 1.4;
+}
+
+/* General Buttons */
+button, .button { /* Default button style, overridden where needed */
+    background-color: #0F52BA;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 8px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+button:hover:not(:disabled), .button:hover:not(:disabled) {
+    background-color: #00418C; /* Darker blue for default buttons */
+}
+
+button:active:not(:disabled), .button:active:not(:disabled) {
+    background-color: #00336B;
+    transform: scale(0.98);
+}
+
+button:disabled {
+    background-color: #555555; /* Consistent disabled style */
+    color: #999999;
+    cursor: not-allowed;
+    border: 1px solid #666666; /* Add border for disabled to match manual mood confirm */
+}
+
+.manual-mood-link-container {
+    margin-top: auto;
+    padding-top: 15px;
+    width: 100%;
+    text-align: center; /* Ensure centered */
+}
+
+.manual-mood-link-container a {
+    font-size: 0.9em; /* Slightly larger */
+    color: #00A8E1; /* Prime blue for links */
+    text-decoration: none;
+    font-weight: 500; /* Medium weight */
+}
+
+.manual-mood-link-container a:hover {
+    text-decoration: underline;
+    color: #4FC3F7; /* Lighter blue on hover */
+}
+
+
+/* --- Screen 2: Camera View & Screen 3: Scanning Preview --- */
+.tagline {
+    font-size: 1.0em;
+    color: #ffffff;
+    line-height: 1.4;
+    margin-bottom: 15px; /* Adjusted margin */
+    font-weight: 500;
+}
+
+.video-capture-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px; /* Space before CHECK MY MOOD button */
+    flex-grow: 1; /* Allow this area to take available space */
+    min-height: 200px; /* Ensure it has some height */
+}
+
+.video-container {
+    width: 220px; /* Width of the face image area */
+    height: 290px; /* Height of the face image area */
+    background-color: #1e1e1e; /* Dark grey if video not loaded */
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px; /* Rounded corners for the container */
+}
+
+/* Brackets for video container */
+.video-container.with-brackets {
+    padding: 15px; /* Space for brackets inside */
+    background-color: transparent; /* Brackets are on the ad background */
+}
+.video-container.with-brackets .bracket {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-color: #FFFFFF;
+    border-style: solid;
+}
+.bracket.top-left { top: 0; left: 0; border-width: 4px 0 0 4px; }
+.bracket.top-right { top: 0; right: 0; border-width: 4px 4px 0 0; }
+.bracket.bottom-left { bottom: 0; left: 0; border-width: 0 0 4px 4px; }
+.bracket.bottom-right { bottom: 0; right: 0; border-width: 0 4px 4px 0; }
+
+#user-video, #scan-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* Remove extra space below video/img */
+    border-radius: 6px; /* Slightly rounded corners for video/scan image */
+}
+.video-container.with-brackets #user-video,
+.video-container.with-brackets #scan-preview-img {
+    position: absolute; /* Position within the padded container */
+    top: 15px; left: 15px;
+    width: calc(100% - 30px); /* Account for padding */
+    height: calc(100% - 30px);
+}
+
+
+.video-placeholder {
+    position: absolute;
+    top: 15px; left: 15px;
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+    object-fit: cover;
+    border-radius: 6px;
+    z-index: 5; /* Above video element initially */
+}
+#user-video.active + .video-placeholder { /* Hide placeholder when video is active */
+    display: none;
+}
+
+#check-mood-btn { /* "CHECK MY MOOD" button */
+    width: 220px; /* Match video area width */
+    padding: 14px 20px; /* More padding */
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Scanning Animation */
+.scan-bar {
+    position: absolute;
+    bottom: 0; /* Start from bottom for up-down */
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to bottom, rgba(0, 168, 225, 0), rgba(0, 168, 225, 0.8), rgba(0, 168, 225, 0));
+    box-shadow: 0 0 10px rgba(0, 168, 225, 0.7);
+    animation: scanAnimationUpDown 2.5s infinite linear;
+    z-index: 10; /* Above scanned image */
+}
+
+@keyframes scanAnimationUpDown {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(calc(-290px + 30px + 4px)); } /* video-container height - padding - bar height */
+    100% { transform: translateY(0); }
+}
+.video-container.with-brackets .scan-bar {
+    /* Adjust scan bar if it's inside the bracketed container for scan preview */
+     left: 15px; width: calc(100% - 30px);
+}
+
+
+.scanning-text { /* "Scanning your mood..." */
+    font-size: 1.1em;
+    color: #e0e0e0;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+/* --- Screen 4: Movie Recommendation Specific Styles --- */
+#screen-recommendation {
+    justify-content: space-around;
+    padding-top: 15px;
+    padding-bottom: 30px;
+}
+
+.recommendation-intro-text {
+    font-size: 1.15em;
+    color: #ffffff;
+    line-height: 1.4;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-weight: 500;
+    padding: 0 10px;
+}
+
+.detected-mood-highlight {
+    background-color: #0F52BA;
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+#movie-title-recommendation {
+    font-size: 1.5em;
+    color: #ffffff;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+.movie-poster-container {
+    width: 200px;
+    max-width: 80%;
+    padding: 5px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    box-sizing: border-box;
+}
+
+#movie-poster {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    object-fit: cover;
+    min-height: 200px;
+    background-color: #222222;
+}
+
+#watch-now-btn.watch-now-styled {
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: bold;
+    padding: 10px 25px;
+    font-size: 0.9em;
+    border-radius: 20px;
+    border: 1px solid #cccccc;
+    margin-bottom: 12px;
+    min-width: 130px;
+    text-transform: capitalize;
+}
+#watch-now-btn.watch-now-styled:hover {
+    background-color: #f0f0f0;
+}
+#watch-now-btn.watch-now-styled:active {
+    background-color: #e0e0e0;
+    transform: scale(0.97);
+}
+
+#scan-again-btn.scan-again-styled {
+    background-color: #0F52BA;
+    color: white;
+    font-weight: bold;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: 4px;
+    width: 200px;
+    text-transform: uppercase;
+}
+#scan-again-btn.scan-again-styled:hover {
+    background-color: #00418C;
+}
+#scan-again-btn.scan-again-styled:active {
+    background-color: #00336B;
+    transform: scale(0.98);
+}
+
+/* --- Screen 5: Manual Mood Selection Specific Styles --- */
+#screen-manual-mood h2 { /* "How would you describe your mood?" */
+    font-size: 1.1em;
+    color: #ffffff;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.mood-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-grow: 1; /* Allow options to take space */
+    justify-content: center; /* Center options vertically if space available */
+}
+
+.mood-options .mood-btn {
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    border: 1px solid #555555;
+    padding: 12px 15px;
+    font-size: 1.05em;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 85%;
+    max-width: 220px;
+    text-align: center;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+}
+
+.mood-options .mood-btn:hover:not(.selected) {
+    background-color: #4a4a4a;
+    border-color: #777777;
+    color: #FFFFFF;
+}
+
+.mood-options .mood-btn.selected {
+    background-color: #FFFFFF;
+    color: #0F52BA;
+    border: 2px solid #0F52BA;
+    font-weight: bold;
+    padding: 11px 14px; /* Adjust for border */
+}
+
+.mood-options .mood-btn:active:not(.selected) {
+    transform: scale(0.98);
+    background-color: #333333;
+}
+.mood-options .mood-btn.selected:active {
+    transform: scale(0.98);
+    background-color: #e0e0e0;
+}
+
+#this-is-my-mood-btn.confirm-mood-button { /* "THIS IS MY MOOD" button */
+    background-color: #0F52BA;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 85%;
+    max-width: 220px;
+    margin-top: auto; /* Pushes to bottom of flex container if mood-options don't fill */
+    text-transform: uppercase;
+}
+
+#this-is-my-mood-btn.confirm-mood-button:hover:not(:disabled) {
+    background-color: #00418C;
+}
+
+#this-is-my-mood-btn.confirm-mood-button:active:not(:disabled) {
+    background-color: #00336B;
+    transform: scale(0.98);
+}
+/* Disabled state is handled by general button:disabled */
+
+
+/* Message Area */
+#message-area {
+    position: absolute;
+    bottom: 10px; /* Position at bottom of ad-container */
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px); /* Respect ad-container padding */
+    background-color: rgba(255,0,0,0.1); /* Default to error styling */
+    border: 1px solid red;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: red;
+    text-align: center;
+    z-index: 100; /* Ensure it's on top */
+    box-sizing: border-box;
+}
